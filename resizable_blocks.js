@@ -132,7 +132,7 @@ const move_fix = (mousemove_listener, cursor_style = null, extra_mouseup_listene
 		node - (HTMLElement) the target node
  		[ options ] - (Object) options
 			{
-				zone_ls: (Array) - list of active zone numbers (default: ['right', 'right-bottom', 'bottom'])
+				zone_ls: (Array) - list of active zone names (default: ['right', 'right-bottom', 'bottom'])
 				active_size: (Number Integer) - size/width of active zones in pixels (default: 25)
 			}
 	-------
