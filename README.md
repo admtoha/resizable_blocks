@@ -18,7 +18,7 @@ Example:
 <div data-resizable-blocks='right, bottom, right-bottom'> ... </div>
 ```
 
-<h3>All available options:</h3>
+<h3>All available options</h3>
  
   - top - top side of the block
   - right - right side
@@ -32,6 +32,7 @@ Example:
 
 By default, if no active sides and corners are specified, the value right, bottom, right-bottom is set.
 
+<h3>Notes</h3>
 Dynamic page changes are supported. In other words, you can create target blocks programmatically with the corresponding attributes, place them on the page, and they will work correctly.  Note: attributes must be set *before* the blocks are placed on the page.
 
 <h3>If necessary, you can directly access the block handling function:</h3>
@@ -43,6 +44,6 @@ make_resizable(node, options)
     *   [options]: (Object) - Options.
         *   zone_ls: (Array) - List of active zone numbers (default: ['right', 'right-bottom', 'bottom']).
         *   active_size: (Number Integer) - Size/width of active zones in pixels (default: 25).
-    Return:
+ Return:
     *   undefined
 ```
