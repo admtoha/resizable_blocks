@@ -15,7 +15,7 @@ This script allows you to add the ability for users to resize specified blocks o
 Example:
 ```html
 <!-- Sets the right side, bottom side, and right-bottom corner as active -->
-    <div data-resizable-blocks='right, bottom, right-bottom'> ... </div>
+<div data-resizable-blocks='right, bottom, right-bottom'> ... </div>
 ```
 
 <h3>All available options:</h3>
