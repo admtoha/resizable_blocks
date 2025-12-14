@@ -60,17 +60,15 @@ const get_node_style = (node, style_prop, pseudo_el) => {
 		
 
 /*
-	Singleton move_fix 
-	Singleton that allows to mitigate all negative effects from page manipulations related to movement.
+	Function move_fix 
+	Function that allows to mitigate all negative effects from page manipulations related to movement.
 	In particular, when moving DOM elements and changing their sizes using the mouse/touch.
 	-------
-	Methods:
-		.get: (mousemove_listener[, cursor_style = null]) - start this mechanism
-			Arguments:
-				mousemove_listener (Function) - event handler for movement; the event is passed as a parameter in the traditional way
-				[cursor_style] (String) - CSS cursor style to apply when the event is triggered	
-			Return:
-				undefined
+		Arguments:
+			mousemove_listener (Function) - event handler for movement; the event is passed as a parameter in the traditional way
+			[cursor_style] (String) - CSS cursor style to apply when the event is triggered	
+		Return:
+			undefined
 */
 const move_fix = (mousemove_listener, cursor_style = null, extra_mouseup_listener = null) => {
 	let iframe_fix = null, touchmove_listener, mouseup_listener, current_event;
