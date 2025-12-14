@@ -139,7 +139,7 @@ const move_fix = (mousemove_listener, cursor_style = null, extra_mouseup_listene
 	Return:
 		undefined 
 */
-const make_resizable = (node, options = {}) => { // options = {zone_ls: [num*], active_size: size*, min_size_cross_listener: foo}
+const make_resizable = (node, options = {}) => { 
 	if(!options.zone_ls) options.zone_ls = ['right', 'right-bottom', 'bottom'];
 	if(!options.active_size) options.active_size = 25;
 	const node_style = get_node_style(node, ['min-height', 'min-width', 'display', 'border-left-width', 'border-right-width', 'border-top-width', 'border-bottom-width', 'position']);
