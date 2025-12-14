@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		
+		<meta charset='UTF-8'>
+		
+		<meta name='viewport' content='width=device-width, maximum-scale=1.0, minimum-scale=1.0'>
+		
+		<style>
+			
+			*{
+				box-sizing: border-box;
+				font-family: Arial;
+			}
+			
+			body{
+				font-family: Arial;
+			}
+			
+			h1{
+				text-align: center;
+			}
+			
+			h3{
+				margin: 1rem;
+				text-align: center;
+			}
+			
+			h4{
+				margin: .5rem;
+				text-align: center;
+				color: gray;
+			}
+			
+			.rb_test{
+				width: 15rem;
+				height: 13rem;
+				box-shadow: 0 2px 4px 1px rgba(0, 0, 60, .4) inset;
+				border-radius: .4rem;
+				overflow: hidden;
+				margin: 1rem;
+				background-color: rgba(255, 255, 255, .8);
+				>div{
+					height: 1rem;
+					width: 13rem;
+					background-color: gray;
+					margin: 1rem;
+					border-radius: .6rem;
+				}
+			}
+		
+		</style>
+		
+		<script language="JavaScript" src="./resizable_blocks.js"></script>
+		
+		<script language="JavaScript">
+		
+		
+			onload = () => {
+				
+			};
+		
+		</script>
+		
+		<title> Resizeble Blocks Demo Example </title>
+	
+	</head>
+	
+	<body>
+		<h1> Resizeble Blocks Demo Example  </h1>
+		
+		<h3> data-resizable-blocks (default) </h3>
+		<div class=rb_test data-resizable-blocks style='border-right: 3px solid blue; border-bottom: 3px solid blue;'>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+		
+		<h3> data-resizable-blocks='left, bottom, left-bottom' </h3>
+		<h4> container: style='text-align: right', target: style='display: inline-block' </h4>
+		<div style='text-align: right;'>
+			<div class=rb_test data-resizable-blocks='left, bottom, left-bottom' style='display:inline-block; border-left: 3px solid blue; border-bottom: 3px solid blue;'>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+		
+		<h3> data-resizable-blocks='top, right, left, bottom, left-bottom, left-top, right-bottom, right-top' </h3>	
+		<h4> target: style='position: absolute' </h4>
+		<div style='position: relative; height: 25rem;'>
+			<div class=rb_test data-resizable-blocks='top, right, left, bottom, left-bottom, left-top, right-bottom, right-top' style='position: absolute; top: 1rem; left: 25rem; border: 3px solid blue;'>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+		
+		<h3> data-resizable-blocks='right' </h3>
+		<h4> container: style='display:flex; flex-flow: row nowrap', target: style='max-width:80%;' </h4>
+		<div style='display:flex; flex-flow: row nowrap; width: 80%; box-shadow: 0 2px 4px 1px rgba(0, 0, 60, .4); border-radius: .4rem'>
+			<div class=rb_test data-resizable-blocks='right' style='border-right: 3px solid blue; max-width:80%;'>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+			<div style='background-color: rgba(100, 100, 100, .4); width: 100%;'></div>
+		</div>
+		
+	</body>
+
+</html>
