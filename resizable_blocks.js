@@ -264,7 +264,6 @@ const make_resizable = (node, options = {}) => {
 					}
 					break;
 			}
-			if(node.gui_object && node.gui_object.is_events_child) node.gui_object.emit('size_change');
 		}, node.style.cursor, () => lock_mode = false);
 	}, {passive: true});
 	node.addEventListener('touchstart', mousedown_listener, {passive: true});
