@@ -42,7 +42,7 @@ make_resizable(node, options)
  Arguments:
     *   node: (HTMLElement) - The target node.
     *   [options]: (Object) - Options.
-        *   zone_ls: (Array) - List of active zone numbers (default: ['right', 'right-bottom', 'bottom']).
+        *   zone_ls: (Array) - List of active zone names (default: ['right', 'right-bottom', 'bottom']).
         *   active_size: (Number Integer) - Size/width of active zones in pixels (default: 25).
  Return:
     *   undefined
