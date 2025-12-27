@@ -161,7 +161,7 @@ const move_fix = (mousemove_listener, cursor_style = null, extra_mouseup_listene
 	-------
 	Return:
 		
-		(Object) - объект контроллер, дающий следующие возможности:
+		(Object) - An object representing the controller, providing the following capabilities:
 			{
 				is_on: - (boolean) a flag indicating whether the script is enabled for the target block.
 				
