@@ -1,4 +1,7 @@
 # resizable_blocks
+
+![Illustration](https://admtoha.is-a.dev/static/public_files/614/2025_12_14_.gif)
+
 This script allows you to add the ability for users to resize specified blocks on your website in an intuitive way: simply by dragging the mouse cursor on the edge or corner of these blocks (or using touch equivalents on mobile devices).
 
 <h2>Interactive Demo</h2>
