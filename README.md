@@ -87,7 +87,8 @@ make_resizable(node, options)
     *   [options]: (Object) - Options.
         *   zone_ls: (Array) - List of active zone names (default: ['right', 'right-bottom', 'bottom']).
         *   active_size: (Number Integer) - Size/width of active zones in pixels (default: 25).
-        *   remember: (Boolean) enables the ability to remember the block size. This means that upon page reload (or creation of a dynamic block with the same ID), the last height and width values are automatically restored. Requires the target block to have an ID (default: false)
+        *   remember: (Boolean) enables the ability to remember the block size. This means that upon page reload (or creation of a dynamic block with the same ID),
+		the last height and width values are automatically restored. Requires the target block to have an ID (default: false)
  Return:
     *  (Object) - An object representing the controller, providing the following capabilities:
 			{
