@@ -52,15 +52,64 @@
 		
 		</style>
 		
-		<script language="JavaScript" src="./resizable_blocks.js"></script>
+		<script language="JavaScript" type="module" src="./resizable_blocks.js"></script>
 		
-		<script language="JavaScript">
-		
-		
-			onload = () => {
+		<script language="JavaScript" type="module">
+			
+			//import make_resizable from './resizable_blocks.js';
+			//console.log(make_resizable);
+			
+			//import('./resizable_blocks.js').then(res => console.log(res.default));
+			
+			/*onload = () => {
+				import('./resizable_blocks.js').then(res => {
+					const make_resizable = res.default;
+					console.log(make_resizable);
+				});
+			};*/
+			
+			window.dynamic_creation = () => {
+				const container = document.createElement('div');
+				container.className = 'rb_test';
+				container.id = 't2';
+				for(let i = 0; i < 6; i++) container.append(document.createElement('div'));
+				container.style = 'border-right: 3px solid blue;';
 				
-			};
-		
+				//container.setAttribute('data-resizable-blocks', 'remember');
+				
+				/*const res = make_resizable(container, {remember: true});
+				document.body.append(container);
+				const switch_button = document.createElement('button');
+				switch_button.innerText = 'resizable Off';
+				switch_button.addEventListener('click', () => res.is_on ? res.off() || (switch_button.innerText = 'resizable On') : res.on() || (switch_button.innerText = 'resizable Off'), {passive: true});
+				document.body.append(switch_button);*/
+				
+				document.body.append(container);
+				setTimeout(() => container.setAttribute('data-resizable-blocks', 'right, remember'), 100);
+				const switch_button = document.createElement('button');
+				switch_button.innerText = 'resizable Off';
+				switch_button.addEventListener('click', () => container.data_resizable_blocks?.is_on ? container.removeAttribute('data-resizable-blocks') || (switch_button.innerText = 'resizable On') : container.setAttribute('data-resizable-blocks', 'right, remember') || (switch_button.innerText = 'resizable Off'), {passive: true});
+				document.body.append(switch_button);
+				
+				/*const remake_button = document.createElement('button');
+				remake_button.innerText = 'remake to {zone_ls: ["right", "bottom", "right-bottom"]}';
+				remake_button.addEventListener('click', () => {
+					if(container.data_resizable_blocks) container.data_resizable_blocks.remake({zone_ls: ['right', 'bottom', 'right-bottom']});
+					container.style['border-right'] = '3px solid blue';
+					container.style['border-bottom'] = '3px solid blue';
+				}, {passive: true});
+				document.body.append(remake_button);*/
+				
+				const remake_button = document.createElement('button');
+				remake_button.innerText = 'remake to data-resizable-blocks="right, bottom, right-bottom"';
+				remake_button.addEventListener('click', () => {
+					container.setAttribute('data-resizable-blocks', 'right, bottom, right-bottom');
+					container.style['border-right'] = '3px solid blue';
+					container.style['border-bottom'] = '3px solid blue';
+				}, {passive: true});
+				document.body.append(remake_button);
+			}		
+
 		</script>
 		
 		<title> Resizeble Blocks Demo Example </title>
@@ -80,10 +129,10 @@
 			<div></div>
 		</div>
 		
-		<h3> data-resizable-blocks='left, bottom, left-bottom' </h3>
+		<h3> data-resizable-blocks='left, bottom, left-bottom, remember' </h3>
 		<h4> container: style='text-align: right', target: style='display: inline-block' </h4>
 		<div style='text-align: right;'>
-			<div class=rb_test data-resizable-blocks='left, bottom, left-bottom' style='display:inline-block; border-left: 3px solid blue; border-bottom: 3px solid blue;'>
+			<div class=rb_test id=t0 data-resizable-blocks='left, bottom, left-bottom, remember' style='display:inline-block; border-left: 3px solid blue; border-bottom: 3px solid blue;'>
 				<div></div>
 				<div></div>
 				<div></div>
@@ -120,6 +169,11 @@
 			<div style='background-color: rgba(100, 100, 100, .4); width: 100%;'></div>
 		</div>
 		
+		<br>
+		<h3> Dynamic Creation </h3>
+		<h4> id='t2' data-resizable-blocks='right, remember' </h4>
+		<center><button onclick='dynamic_creation()'> Create New </button></center>
+	
 	</body>
 
 </html>
