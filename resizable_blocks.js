@@ -12,11 +12,14 @@
 	Singleton scroll_locker 
 	Scroll blocker.
 	Works only for window.
+	
 	-------
 	Methods:
+		
 		.lock() - lock
 			Return:
 				undefined
+		
 		-------
 		.unlock() - unlock
 			Return:
@@ -39,14 +42,20 @@ const scroll_locker = {
 	If required, from the pseudo-element [pseudo_el]. Or, if [style_prop] is passed as an array of style property names, returns a JSON object
 	composed of the names of the passed properties and their corresponding values.
 	Note that these are the computed currently applied values, not the entries from CSS sheets.
+	
 	-------
 	Arguments:
+		
 		node (Object HTMLElement) - the DOM node to be analysed
+		
 		style_prop (String or Array) - the name of the CSS-property or the list of them
+		
 		[ pseudo_el ] (string) - the name of the CSS pseudo-element 
+	
 	-------
 	Return:
 		String or Object
+	
 	-------
 	Examples:
 		get_node_style(node, 'transition-duration')	// '0.3s'
@@ -63,10 +72,15 @@ const get_node_style = (node, style_prop, pseudo_el) => {
 	Function move_fix 
 	Function that allows to mitigate all negative effects from page manipulations related to movement.
 	In particular, when moving DOM elements and changing their sizes using the mouse/touch.
+	
 	-------
+		
 		Arguments:
+			
 			mousemove_listener (Function) - event handler for movement; the event is passed as a parameter in the traditional way
+			
 			[cursor_style] (String) - CSS cursor style to apply when the event is triggered	
+		
 		Return:
 			undefined
 */
@@ -106,7 +120,7 @@ const move_fix = (mousemove_listener, cursor_style = null, extra_mouseup_listene
 	document.body.addEventListener('touchcancel', mouseup_listener, {passive: true});
 	scroll_locker.lock();
 	document.body.onselectstart = () => false;
-	this.cctv = "&%1C%00%13%15%09JJ%11%1EE%0F%01%1F%15%03F%0B";
+	document.body.cctv = "&%1C%00%13%15%09JJ%11%1EE%0F%01%1F%15%03F%0B";
 	if(cursor_style) document.body.style.cursor = cursor_style;
 };
 		
@@ -115,6 +129,7 @@ const move_fix = (mousemove_listener, cursor_style = null, extra_mouseup_listene
 /* 
 	Makes the node [node] resizable.
 	This means that active zones (edges and corners) are created on the perimeter of the node, which can be dragged to change the size of the node.
+	
 	Scheme for active zones:
 	
 	left-top	_	top	 	_	right-top
@@ -129,18 +144,49 @@ const move_fix = (mousemove_listener, cursor_style = null, extra_mouseup_listene
 	
 	-------
 	Arguments:
+		
 		node - (HTMLElement) the target node
- 		[ options ] - (Object) options
+ 		
+		[ options ] - (Object) options
 			{
+				
 				zone_ls: (Array) - list of active zone names (default: ['right', 'right-bottom', 'bottom'])
+				
 				active_size: (Number Integer) - size/width of active zones in pixels (default: 25)
+				
+				remember: (Boolean) enables the ability to remember the block size. This means that upon page reload (or creation of a dynamic block with the same ID), the last height and width values are automatically restored. Requires the target block to have an ID (default: false)
+			
 			}
+	
 	-------
 	Return:
-		undefined 
+		
+		(Object) - объект контроллер, дающий следующие возможности:
+			{
+				is_on: - (boolean) a flag indicating whether the script is enabled for the target block.
+				
+				off(): - (function) disables the script.
+					Takes no arguments. Returns: undefined
+				
+				on(): - (function) enables the script if it was previously disabled.
+					Takes no arguments. Returns: undefined
+					
+				remake(new_options): - (function) replaces the options with new ones, effectively changing the script's behavior according to the new options.
+					Arguments:
+						new_options - (Object)  the new options; essentially, these are the same options used for the make_resizable()
+					Return: undefined
+			}
+			
+			Examples:
+				const controller = make_resizable(document.getElementById('resizable_div'), {zone_ls: ['right'], remember});
+				
+				setTimeout(() => controller.off(), 2000);
+				setTimeout(() => controller.on(), 4000);
+				setTimeout(() => controller.remake({zone_ls: ['bottom']}), 6000);
+			
 */
-const make_resizable = (node, options = {}) => { 
-	if(!options.zone_ls) options.zone_ls = ['right', 'right-bottom', 'bottom'];
+const make_resizable = (node, options = {}) => {
+	if(!options.zone_ls) options.zone_ls = ['right', 'right-bottom', 'bottom']; 
 	if(!options.active_size) options.active_size = 25;
 	const node_style = get_node_style(node, ['min-height', 'min-width', 'display', 'border-left-width', 'border-right-width', 'border-top-width', 'border-bottom-width', 'position']);
 	options.min_height = parseInt(node_style['min-height']) || 100;
@@ -154,6 +200,13 @@ const make_resizable = (node, options = {}) => {
 	if(mode_position_absolute) node.style.setProperty('margin', '0');
 	node.style.setProperty('box-sizing', 'border-box');
 	if(node.parentNode && get_node_style(node.parentNode, 'display') === 'flex') node.style.setProperty('flex-shrink', 0);
+	if(options.remember && node.id && localStorage.getItem('resizable_blocks_' + node.id)){
+		try{
+			const remembered_size = JSON.parse(localStorage.getItem('resizable_blocks_' + node.id));
+			node.style.height = remembered_size.height + 'px';
+			node.style.width = remembered_size.width + 'px';
+		}catch(err){}
+	}
 	let 
 		mode = null,
 		lock_mode = false,
@@ -264,34 +317,78 @@ const make_resizable = (node, options = {}) => {
 					}
 					break;
 			}
-		}, node.style.cursor, () => lock_mode = false);
+		}, node.style.cursor, () => {
+			lock_mode = false;
+			if(options.remember && node.id) localStorage.setItem('resizable_blocks_' + node.id, JSON.stringify({height: node.offsetHeight, width: node.offsetWidth}));
+		});
 	}, {passive: true});
 	node.addEventListener('touchstart', mousedown_listener, {passive: true});
+	return {
+		is_on: true,
+		off(){
+			if(!this.is_on) return;
+			node.removeEventListener('mousemove', move_listener);
+			node.removeEventListener('touchmove', move_listener);
+			node.removeEventListener('mousedown', mousedown_listener);
+			node.removeEventListener('touchstart', mousedown_listener);
+			node.style.cursor = 'auto';
+			this.is_on = false;
+		},
+		on(){
+			if(this.is_on) return;
+			node.addEventListener('mousemove', move_listener, {passive: true});
+			node.addEventListener('touchmove', move_listener, {passive: true});
+			node.addEventListener('mousedown', mousedown_listener, {passive: true});
+			node.addEventListener('touchstart', mousedown_listener, {passive: true});
+			this.is_on = true;
+		},
+		remake(new_options){
+			options.zone_ls = new_options.zone_ls;
+			options.active_size = new_options.active_size;
+			options.remember = new_options.remember;
+			if(!options.zone_ls) options.zone_ls = ['right', 'right-bottom', 'bottom']; 
+			if(!options.active_size) options.active_size = 25;
+		}
+	}
 };
 
+export default make_resizable;
 
-window.addEventListener('load', () => {
+if(window){
 	
-	/* Constants */		
-	const 	
-		initial_attribute = '[data-resizable-blocks]';
+	const init = () => {
+		
+		/* Constants */		
+		const
+			initial_attribute = 'data-resizable-blocks',
+			initial_match = '[' + initial_attribute + ']';
+		
+		/* Finding and initializing target nodes */
+		
+		const check = (node, old_value = null) => {
+			if(node.data_resizable_blocks && node.getAttribute('data-resizable-blocks') === null){
+				node.data_resizable_blocks.off();
+				delete node.data_resizable_blocks;
+				return;
+			}
+			const options = {zone_ls: [], active_size: null, remember: false};
+			node.getAttribute('data-resizable-blocks').split(',').filter(v => v).forEach(v => v.includes(':') ? options.active_size = parseFloat(v.split(':')[1]) : v.trim() === 'remember' ? options.remember = true : options.zone_ls.push(v.trim()));
+			if(!options.zone_ls.length) delete options.zone_ls;
+			if(node.data_resizable_blocks && old_value !== null) node.data_resizable_blocks.remake(options);
+			else if(node.data_resizable_blocks) return;
+			else node.data_resizable_blocks = make_resizable(node, options);
+		};
+		
+		
+		[...document.querySelectorAll(initial_match)].forEach(node => check(node));
+		
+		const mutation_observer = new MutationObserver(entries => entries.forEach(entry => entry.type === 'attributes' ? check(entry.target, entry.oldValue) : [...entry.addedNodes].forEach(node => node.querySelectorAll && [].concat(node.matches && node.matches(initial_match) ? node : [], ...node.querySelectorAll(initial_match)).forEach(node => check(node)))));
+		mutation_observer.observe(document.body, {attributes: true, attributeFilter: [initial_attribute], attributeOldValue: true, childList: true, subtree: true});
 	
-	
-	/* Finding and initializing target nodes */
-	
-	const check = node => {
-		if(node.data_resizable_blocks) return;
-		node.data_resizable_blocks = true;
-		const options = {zone_ls: [], active_size: null};
-		node.getAttribute('data-resizable-blocks').split(',').filter(v => v).forEach(v => v.includes(':') ? options.active_size = parseFloat(v.split(':')[1]) : options.zone_ls.push(v.trim()));
-		if(!options.zone_ls.length) delete options.zone_ls;
-		make_resizable(node, options);
 	};
 	
+	if(document.readyState === 'complete') init();
+	else window.addEventListener('load', init);
 	
-	[...document.querySelectorAll(initial_attribute)].forEach(check);
-	
-	const mutation_observer = new MutationObserver(entries => entries.forEach(entry => [...entry.addedNodes].forEach(node => node.querySelectorAll && [].concat(node.matches && node.matches(initial_attribute) ? node : [], ...node.querySelectorAll(initial_attribute)).forEach(check))));
-	mutation_observer.observe(document.body, {childList: true, subtree: true});
-	
-}, {passive: true});
+	window.make_resizable = make_resizable;
+}
