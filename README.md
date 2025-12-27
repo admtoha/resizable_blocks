@@ -50,8 +50,33 @@ By default, if no active sides and corners are specified, the value right, botto
 <h3>Browser support</h3>
 Tested in desktop and mobile versions of Firefox and Chrome, and their main derivatives. Unfortunately, browsers in the Safari family could not be tested. (I will check and update this point as soon as possible).
 
-<h3>Notes</h3>
-Dynamic page changes are supported. In other words, you can create target blocks programmatically with the corresponding attributes, place them on the page, and they will work correctly. 
+<h3>Dynamic page changes are supported</h3>
+
+ - You can programmatically create a block with the "data-resizable-blocks" attribute and place it on the page, and the script will work perfectly.
+   ```javascript
+	// Example:
+	const container = document.createElement('div');
+	container.id = 'resizable_div';
+	container.setAttribute('data-resizable-blocks', 'right, remember');
+	document.body.append(container);
+   ```
+ - It is also possible to enable the script for blocks already located on the page by setting that attribute for them.
+   ```javascript
+	// Example:
+	document.getElementById('resizable_div').setAttribute('data-resizable-blocks', 'right, bottom, remember');
+   ```
+ - You can disable the script for involved blocks by simply removing the corresponding "data-resizable-blocks" attribute.
+   ```javascript
+	// Example:
+	document.getElementById('resizable_div').removeAttribute('data-resizable-blocks');
+   ```
+ - It is also possible to change the script's behavior "on the fly" by simply changing the value of the "data-resizable-blocks" attribute to a new one.
+   ```javascript
+	// Example:
+	document.getElementById('resizable_div').setAttribute('data-resizable-blocks', 'right');
+	//...
+	document.getElementById('resizable_div').setAttribute('data-resizable-blocks', 'right, bottom, right-bottom, remember');
+   ```
 
 <h3>If necessary, you can directly access the block handling function:</h3>
 
