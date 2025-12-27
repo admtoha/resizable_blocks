@@ -8,7 +8,7 @@ This script allows you to add the ability for users to resize specified blocks o
 <a href='https://admtoha.is-a.dev/html/demo_resizable_blocks.html'>https://admtoha.is-a.dev/html/demo_resizable_blocks.html</a>
 
 <h2>How to Use</h2>
-1. Connect the `resizable_blocks.js` file to your page:
+1. Connect the <b>resizable_blocks.js</b> file to your page:
 
 There are several ways to achieve this:
 -  the classic approach using HTML (don't forget the attribute <b><i> type="module" </i></b>) 
@@ -28,7 +28,7 @@ const make_resizable = await import('./resizable_blocks.js');
 
 ```
 
-2. Specify the target blocks with the data-resizable-blocks attribute and populate its value with options, separated by commas, indicating the active (user-interactive) sides and corners.
+2. Specify the target blocks with the <b>data-resizable-blocks</b> attribute and populate its value with options, separated by commas, indicating the active (user-interactive) sides and corners.
 Example:
 ```html
 <!-- Sets the right side, bottom side, and right-bottom corner as active -->
@@ -37,16 +37,16 @@ Example:
 
 <h3>All available options</h3>
  
-  - top - top side of the block
-  - right - right side
-  - bottom - bottom side
-  - left - left side
-  - left-top - left-top corner
-  - left-bottom - left-bottom corner
-  - right-top - right-top corner
-  - right-bottom - right-bottom corner
-  - active_size: size* - The size (in pixels) of the "active zone" (default: 25). This refers to the size of the interactive space on the edge of the target block.
-  - remember - enables the ability to remember the block size. This means that upon page reload (or creation of a dynamic block with the same ID), the last height and width values are automatically restored. Requires the target block to have an ID
+  - <b>top</b> - top side of the block
+  - <b>right</b> - right side
+  - <b>bottom</b> - bottom side
+  - <b>left</b> - left side
+  - <b>left-top</b> - left-top corner
+  - <b>left-bottom</b> - left-bottom corner
+  - <b>right-top</b> - right-top corner
+  - <b>right-bottom</b> - right-bottom corner
+  - <b>active_size: size*</b> - The size (in pixels) of the "active zone" (default: 25). This refers to the size of the interactive space on the edge of the target block.
+  - <b>remember</b> - enables the ability to remember the block size. This means that upon page reload (or creation of a dynamic block with the same ID), the last height and width values are automatically restored. Requires the target block to have an ID
 
 By default, if no active sides and corners are specified, the value right, bottom, right-bottom is set.
 
