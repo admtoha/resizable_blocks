@@ -4,6 +4,8 @@
 
 This script allows you to add the ability for users to resize specified blocks on your website in an intuitive way: simply by dragging the mouse cursor on the edge or corner of these blocks (or using touch equivalents on mobile devices).
 
+<b> ver. 2025-12-27 </b>
+
 <h2>Interactive Demo</h2>
 <a href='https://admtoha.is-a.dev/html/demo_resizable_blocks.html'>https://admtoha.is-a.dev/html/demo_resizable_blocks.html</a>
 
