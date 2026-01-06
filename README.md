@@ -22,6 +22,10 @@ There are several ways to achieve this:
 
 ```javascript
 
+import './resizable_blocks.js';
+
+// or
+
 import make_resizable from './resizable_blocks.js';
 
 // or
